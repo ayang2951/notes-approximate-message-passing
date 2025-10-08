@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AMP Notes</title>
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Early theme setter -->
+  <script>
+    (function(){
+      try {
+        const stored = localStorage.getItem('theme');
+        let theme = stored;
+        if (!theme) {
+          theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Marked -->
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        tags: 'ams'
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-head-inner">
+      <div class="title-block">
+        <h1>Notes on Approximate Message Passing</h1>
+        <p class="subtitle">Project description.</p>
+      </div>
+      <div class="controls">
+        <button id="themeToggle" aria-label="Toggle color theme" aria-pressed="false">🌗</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+    <nav id="toc" aria-label="Table of contents"></nav>
+    <article id="content" aria-live="polite">
+      <noscript>Please enable JavaScript to see the compiled notes.</noscript>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <small>. &nbsp;§&nbsp; . &nbsp; Audrey Yang &nbsp; . &nbsp;§&nbsp; .</small>
+  </footer>
+
+  <button id="toggleBookmarks" title="Show bookmarks">📚</button>
+  <div id="bookmarkPanel">
+    <h3>Bookmarked Content</h3>
+    <ul id="bookmarkList"></ul>
+  </div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,338 @@
+:root{
+    --max-w: 900px;
+    --side-pad: clamp(16px, 4vw, 40px);
+
+    --accent: rgb(112, 112, 112);
+    --border: rgba(112, 112, 112, 0);
+    --ink: #1b1b1b;
+    --ink-faint: #606060;
+    --bg: #ffffff;
+    --box: rgba(238, 238, 238, 0);
+    --bkmk-box: rgb(255, 255, 255, 0.8);
+
+    --def-color: rgba(49, 49, 49);
+    --thm-color: rgba(26, 39, 142);
+    --lem-color: rgb(84, 0, 162);
+    --prop-color: rgb(0, 135, 54);
+    --ex-color:rgb(128, 24, 79);
+    --rmk-color: rgb(39, 130, 183);
+    --cor-color: rgb(123, 255, 0);
+
+    --def-bkgd: rgba(49, 49, 49, 0.09);
+    --thm-bkgd: rgba(26, 39, 142, 0.09);
+    --lem-bkgd:  rgba(84, 0, 162, 0.09);
+    --prop-bkgd: rgba(0, 135, 54, 0.09);
+    --ex-bkgd: rgba(128, 24, 79, 0.09);
+    --rmk-bkgd: rgba(39, 130, 183, 0.09);
+    --cor-bkgd: rgba(123, 255, 0, 0.09);
+}
+
+  html[data-theme="dark"]{
+    --accent: #b5b5b5;
+    --ink: #c5c5c5;
+    --ink-faint: #b6b6b6;
+    --bg: #0e0f10;
+    --box: #161616;
+
+    --def-color: #ffffff;
+    --thm-color: #88bfff;
+    --lem-color: #d779ff;
+    --prop-color: #81fff0;
+    --cor-color: #ff94d1;
+    --rmk-color: #96ffa2;
+  }
+  
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family: "EB Garamond", serif;
+    line-height:1.55;
+    font-size:18px;
+  }
+  
+  /* Header */
+  .site-header {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 3rem var(--side-pad) 1.25rem;
+  }
+  .site-head-inner { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
+  .title-block h1 { margin:0 0 .3rem; font-size: clamp(2rem, 3vw, 2.4rem); font-weight:600; }
+  .subtitle { margin:0; color:var(--ink-faint); font-style:italic; }
+  
+  #themeToggle {
+    background: color-mix(in oklab, var(--box) 85%, transparent);
+    border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+    padding: .35rem .6rem;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  
+  /* Content */
+  #content {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 1rem var(--side-pad) 3rem;
+  }
+  #content h1,#content h2,#content h3 {
+    margin-top:2rem;
+    margin-bottom:.8rem;
+    line-height:1.2;
+  }
+  #content h1 {
+    font-size: clamp(1.9rem, 2.4vw, 2.2rem);
+    border-bottom:1px solid color-mix(in oklab, var(--ink) 20%, transparent);
+    padding-bottom:.4rem;
+  }
+  
+  /* Callouts */
+  .callout {
+    border-left: 4px solid var(--border);
+    background: var(--box);
+    padding: .85rem 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+  }
+  /* --- Callout label: structured spans --- */
+.callout .label {
+  font-variant: normal;   /* stop small-caps */
+  text-transform: none;   /* stop auto-capitalization */
+  color: var(--ink-faint);
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Type word (capitalized by JS) — leave a small gap before the number */
+.callout .label .callout-type {
+  font-variant: normal;
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+/* Number — NO right margin so colon appears immediately after the number */
+.callout .label .callout-num {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  font-weight: 700;
+}
+
+/* Title: begins with ": " from JS, preserve exact casing and spacing */
+.callout .label .callout-title {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  font-weight: 600;
+  text-transform: none;
+  white-space: normal; /* keeps the colon and space */
+}
+
+.callout.definition     { border-left-color: var(--def-color); 
+                          background: var(--def-bkgd);
+                        }
+
+.callout.theorem        { border-left-color: var(--thm-color); 
+                          background: var(--thm-bkgd);
+                        }
+
+.callout.lemma          { border-left-color: var(--lem-color); 
+                          background: var(--lem-bkgd);
+                        }
+                        
+.callout.proposition    { border-left-color: var(--prop-color); 
+                          background: var(--prop-bkgd);
+                        }
+
+.callout.corollary      { border-left-color: var(--cor-color); }
+
+.callout.remark         { border-left-color: var(--rmk-color); 
+                          background: var(--rmk-bkgd);
+                        }
+
+.callout.example        { border-left-color: var(--ex-color); 
+                          background: var(--ex-bkgd);
+                        }
+/* Collapsibles */
+.collapsible {
+  border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+  border-radius:8px;
+  background: color-mix(in oklab, var(--box) 90%, transparent);
+  margin: 1rem 0;
+}
+.collapsible summary {
+  cursor:pointer;
+  list-style:none;
+  padding:.75rem 1rem;
+  display:flex; align-items:center; gap:.5rem;
+  font-weight:700;
+}
+.collapsible summary::-webkit-details-marker { display:none; }
+.collapsible summary::before {
+  content: "▸";
+  transition: transform .2s ease;
+  color: var(--accent);
+}
+.collapsible[open] > summary::before { transform: rotate(90deg); }
+
+/* --- Collapsible content with max-height (fixes scrollbars/formatting) --- */
+.collapsible__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, padding .2s ease;
+  padding-inline: 1rem;
+  padding-block-start: .5rem;
+  padding-block-end: 0; /* no bottom padding when closed */
+  margin-bottom: 0;     /* remove awkward bottom spacing */
+}
+  
+.collapsible[open] .collapsible__content {
+  max-height: 3000px;   /* big enough for long proofs */
+  padding-block-end: .5rem; /* add a little space only when open */
+}
+
+.collapsible .collapsible { margin-left:1rem; }
+
+/* Ensure consistent spacing inside callouts */
+.callout > *:last-child {
+  margin-bottom: 0 !important; /* remove trailing margins */
+  padding-bottom: 0 !important;
+}
+
+/* Add uniform internal padding at the bottom */
+.callout {
+  padding-bottom: 1.5rem; /* adjust value to taste */
+}
+
+  
+/* TOC */
+#toc {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: .5rem var(--side-pad) 0;
+}
+#toc .toc-list {
+  display:flex; flex-wrap:wrap; gap:.5rem .9rem; padding:.4rem 0 1rem;
+}
+#toc .toc-list a {
+  display:inline-block;
+  padding:.25rem .7rem;
+  border-radius:6px;
+  background: color-mix(in oklab, var(--box) 80%, transparent);
+  color:inherit;
+  text-decoration:none;
+  border:1px solid color-mix(in oklab, var(--ink) 15%, transparent);
+  transition: background .15s ease, color .15s ease;
+}
+#toc .toc-list a:hover { background: var(--accent); color:#fff; }
+  
+/* Misc */
+pre, code { font-family: ui-monospace, monospace; background: color-mix(in oklab, var(--box) 85%, transparent); border-radius:6px; }
+pre { padding:.8rem; overflow:auto; }
+.site-footer { max-width:var(--max-w); margin:0 auto; padding:1rem var(--side-pad); color:var(--ink-faint); font-size:.9rem; }
+  
+.bookmark-btn {
+  visibility: hidden;
+  cursor: pointer;
+  font-size: .95rem;
+  color: var(--ink-faint);
+  background: none;
+  border: none;
+  padding: 0;
+  display: inline;
+  margin-left: .45rem;
+  vertical-align: middle;
+}
+
+.bookmarkable:hover .bookmark-btn,
+.callout .label:hover .bookmark-btn,
+h2:hover > .bookmark-btn,
+h3:hover > .bookmark-btn {
+  visibility: visible;
+}
+
+.bookmarked .bookmark-btn {
+  color: var(--accent);
+}
+  
+#toggleBookmarks {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 1001;
+}
+  
+#bookmarkPanel {
+  position: fixed;
+  right: 1rem;
+  bottom: 3.5rem;
+  width: 360px;
+  background: var(--bkmk-box);
+  color: var(--ink);
+  border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+  border-radius: 8px;
+  padding: .6rem;
+  max-height: 60vh;
+  overflow: auto;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  z-index: 1000;
+  display: none;
+}
+  
+#bookmarkPanel h3 {
+  margin: 0 0 .5rem;
+  font-size: 1.3rem;  /* larger than before */
+  font-weight: 700;
+}
+  
+  
+#bookmarkList { list-style:none; margin:0; padding:0; }
+#bookmarkList li { padding:.4rem 0; border-bottom:1px solid color-mix(in oklab, var(--ink) 6%, transparent); }
+  
+#bookmarkList li.heading-item strong { display:block; font-weight:700; }
+#bookmarkList li.heading-item.level-1 { padding-left: 0; }
+#bookmarkList li.heading-item.level-2 { padding-left: 0.8rem; }
+#bookmarkList li.heading-item.level-3 { padding-left: 1.6rem; }
+  
+.heading-bookmark-list { list-style:none; margin:.3rem 0 0 0; padding:0; }
+
+.heading-bookmark-list .bookmark-item a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 0.9rem; 
+}
+  
+.heading-bookmark-list .bookmark-item a {
+  text-decoration:none;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.heading-bookmark-list .bookmark-item button.bookmark-remove {
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:var(--ink-faint);
+  font-size:1rem;
+  padding-left:.5rem;
+}
+
+.bookmark-item a:hover { text-decoration:underline; }
+
+/* Add more spacing between list items */
+ul li,
+ol li {
+  margin-bottom: 0.5rem; /* adjust value for spacing */
+}
