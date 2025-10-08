@@ -1,8 +1,8 @@
-_Overview: Introduction of the section content._
+_AMP algorithms are useful in many high-dimensional statistical estimation settings. Hence, we introduce the high-dimensional statistics setup before discussing the specifics of AMP._
 
 ## Section 1: Introduction to High-Dimensional Statistics
 
-We introduce the first section.
+
 
 We now introduce a theorem.
 

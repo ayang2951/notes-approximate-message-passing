@@ -331,8 +331,36 @@ h3:hover > .bookmark-btn {
 
 .bookmark-item a:hover { text-decoration:underline; }
 
+/* Ensure consistent spacing inside callouts */
+.callout > *:last-child {
+  margin-bottom: 0 !important; /* remove trailing margins */
+  padding-bottom: 0 !important;
+}
+
+/* Add uniform internal padding at the bottom */
+.callout {
+  padding-bottom: 1.5rem; /* adjust value to taste */
+}
+
+
 /* Add more spacing between list items */
 ul li,
 ol li {
   margin-bottom: 0.5rem; /* adjust value for spacing */
+}
+
+/* Slightly reduce spacing after display equations in plain text only */
+:not(.callout) .MathJax_Display {
+  margin-bottom: 1.0rem; /* smaller gap, adjust value as needed */
+}
+
+/* Extra breathing room below collapsible boxes */
+details.collapsible {
+  margin-bottom: 1rem; /* increase value if you want more space */
+}
+
+/* Standardize spacing for display equations */
+.MathJax_Display {
+  margin-block-start: 1rem;  /* space above equation */
+  margin-block-end: 1rem;    /* space below equation */
 }
