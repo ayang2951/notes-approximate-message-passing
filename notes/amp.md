@@ -16,8 +16,8 @@ There are two features of AMP algorithms that make them attractive:
   For example, if we expect the signal to be sparse, AMP would be a good choice of method. Consider a rank-1 matrix estimation problem where we observe a matrix
   $$Y = \frac{\lambda}{n} v v^T + W,$$
   where we want to estimate $v$ and $W$ is some noise matrix. A typical method may be to use power iteration and use the leading eigenvector. However, if we know $v$ to be sparse, power iteration isn't optimal, as this sparsity constraint would be difficult to enforce. However, AMP makes this easy.</li>
-  <li>Second, AMP gives precise asymptotic guarantees in the "large system limit", i.e. when the dimension of the estimand grows with the observations: 
-  $$n, d \rightarrow \infty \quad \text{and} \quad \frac{d}{n} \rightarrow \delta \in (0, \infty).$$ 
+  <li>Second, AMP gives precise asymptotic guarantees in the "large system limit", i.e. when the dimension ($p$) of the estimand grows with the observations ($n$): 
+  $$n, p \rightarrow \infty \quad \text{and} \quad \frac{n}{p} \rightarrow \delta \in (0, \infty).$$ 
   In the previous case, the dimension is the same as the size of problem, so clearly $\delta = 1$.
 
   A natural choice in high dimensional linear regression is the LASSO estimator, which uses iterative soft thresholding to produce an estimate. Here, the AMP iteration does not aim to "compete" with iterative soft thresholding as an estimator; its function is more as analysis of the LASSO estimates. It turns out that AMP may be set up to converge to a fixed point that is guaranteed to be a LASSO solution&mdash;hence, the exact asymptotics that AMP gives us can also be "pushed" onto the LASSO estimate.</li>
@@ -45,7 +45,7 @@ We start with a brief history of AMP and its origins.
 We will start with what we call the "abstract AMP recursion" specifically for a symmetric matrix as input. This algorithm is not to be used as a solver for any particular problem with a symmetric matrix, but it provides us with:
 <ol type="i">
   <li>A first look at the components of an AMP algorithm, including a Lipschitz function used as a "denoiser" and a memory term called the "Onsager correction". This is what gives us the exact asymptotics for the iterates.</li>
-  <li>A starting point for constructing and analyzing AMP algorithms. The form given in the abstract recursion can be used to prove asymptotics for true algorithms: they may be molded into the form of the abstract recursion and hence analyzed.</li>
+  <li>A starting point for constructing and analyzing AMP algorithms. The form given in the abstract recursion can be used to prove asymptotics for true algorithms: the latter may be molded into the form of the abstract recursion and hence analyzed.</li>
   <li>A precursor to other abstract AMP recursions that can be used to handle variants of low-dimensional estimation problems, such as where the input is an asymmetric matrix, or in generalized linear models.</li>
 </ol>
 
@@ -105,9 +105,9 @@ Let $W$ be a GOE matrix, and let $h^0$ be an initializer independent of $W$. Let
 
 Then for each $k \in \mathbb N$, for the AMP iterates defined by
 $$m^k = f\_k(h^k), \qquad b\_k = \frac{1}{n} \sum_{i = 1}^n f\_k^{'}(h\_i^k), \qquad h^{k + 1} = Wm^k - b_k m^{k - 1},$$
-the empirical distribution of $h^k$ (we shall denote this $\hat P_{h^k}$) converges to $\mathcal N(0, \tau_k^2)$, where the variance is defined by the recursion
+the empirical distribution of $h^k$ (we shall denote this $\hat P_{h^k}$) converges to $\mathcal N(0, \tau_k^2)$ in Wasserstein distance (this will be stated more precisely in the formal theorem statement), where the variance is defined by the recursion
 $$\tau_{k + 1}^2 = \mathbb E[(f_k(Z_k)^2)],$$
-where $Z_k \sim \mathbb N(0, \tau_k^2)$. This recursion for the variances is called the state evolution.
+where $Z_k \sim \mathbb N(0, \tau_k^2)$. This recursion for the variance terms is called the <em><i>state evolution</em></i>.
 </div>
 
 <details class="collapsible">
@@ -118,9 +118,9 @@ $$h^1 = Wf_0(h^0) \quad \text{and} \quad \tau_1^2 \triangleq \lim_{n \rightarrow
 
 Conditioned on $h^0$, because $h^0 \perp W$, we have that (abusing notation for distribution)
 $$W f_0(h^0) \bigg\lvert_{h^0} \overset{d}= \mathcal N \left(0, \ \frac{1}{n}\sum_{i = 1}^n f_0(h^0_i) \mathbb I_n + \frac{1}{n} f_0(h_0) f_0(h_0)^\top\right) \qquad \text{ for each } n \in \mathbb N.$$
-We prove this result on the finite-sample distribution:
+We can first prove this above result on the finite-sample distribution.
 <details class="collapsible">
-<summary>Proof of Finite-Sample Distribution.</summary>
+<summary>Computing the Finite-Sample Distribution.</summary>
 <div class="collapsible__content">
 Recall that for $W \sim \text{GOE}(n)$, $W \overset{d}= G + G^\top$ where $G_{ij} \overset{iid}\sim \mathcal N(0, \frac{1}{2n})$. Hence, we have that
 $$W f_0(h^0) \bigg\lvert_{h^0} \overset{d}= (G+G^\top)f_0(h^0)\bigg\lvert_{h^0} = [G f_0(h^0) + G^\top f_0(h^0)] \bigg\lvert_{h^0}.$$
@@ -129,10 +129,11 @@ $$\mathbb E_{W | h^0}[(W f_0(h^0))_i] = \mathbb E_{W|h^0}[(f_0(h^0)^\top G_{i, \
 since this is the sum of $2n - 1$ independent Gaussians with mean 0, variance $\frac{1}{2n}$ and 1 Gaussian with mean 0, variance $\frac{2}{n}$ because element $G_{ii}$ was repeated.
 
 Next, we compute the variance. Let $0\leq i, j \leq n$, and we compute $\text{Cov}((W f_0(h^0))_i, (W f_0(h^0))_j)$.
-$$$$
+$$equation$$
+Hence, we obtain the form above for $n$ finite.
 </div>
 </details>
-We now take $n \in \infty$ to see the asymptotic result. We have that 
+We now take $n \rightarrow \infty$ to see the asymptotic result. We have that 
 $$\frac{1}{n} \Vert f_0(h^0) \Vert_2^2 \rightarrow \tau_1^2$$
 by assumption, and for "reasonable" $f_0(h^0)$, we have that the element
 $$(\frac{1}{n} f_0(h^0) f_0(h^0)^\top)_{ij} = \frac{1}{n} f_0(h^0)_i \cdot f_0(h^0)_j \rightarrow 0 \quad \text{as } n \rightarrow \infty.$$
@@ -141,6 +142,19 @@ $$\hat P_{h^1} = \hat P_{W h^0} \rightarrow \mathcal N(0, \tau^2_1).$$
 
 The next step is to prove the same for $h^2$, but the challenge now is that $W$ is not independent of $h^1$:
 $$h^2 = W m^1 - b_1 m^0 \qquad \text{where } m^1 = f_1(h^1).$$
+However, consider a new matrix $\tilde W \sim \text{GOE}(n) \perp m^1$. Then we have that $\tilde Wm^1$ is Gaussian, and that, for $\hat P_n$ denoting the empirical distribution, 
+$$\hat P_n(\tilde W m^1) \bigg \lvert_{m^1} \rightarrow \mathcal N(0, \tilde \tau_2^2),$$
+where 
+$$\tilde \tau_2^2 \overset{(1)}= \lim_{n\rightarrow\infty} \frac{1}{n} \Vert m^1 \Vert_2^2 \overset{(2)}= \lim_{n \rightarrow\infty} \Vert f_1(h^1) \Vert_{n, 2} \overset{(3)}= \mathbb E[(f_1(Z_1))^2] \overset{(4)}= \tau_2^2,$$
+where, as before, $Z_1 \sim \mathcal N(0, \tau_1^2)$.
+
+Walking through the equalities, we have that $(1)/(2)$ follow from the same argument as was used in the first iteration, the proof of $(3)$ requires many, many technical steps and can be ignored for now (note that we <i>cannot</i> simply apply our typical LLN argument), and $(4)$ is from our definition of $\tau_k^2$ in the state evolution recursion&mdash;how we defined $\tau_2^2$.
+
+At a high-level, the role of the Onsager correction term $b_1 \cdot m^0$ is the "cancel out" the dependence exactly in the limit. It ensures that at, for example, the second time step, $h^2$ asymptotically has the same distribution as $\tilde W m^1$.
+
+Having proved the first two time steps (one with the dependence that needed correction), we proceed to the inductive step: showing that $\hat P_n(h^{k + 1}) \rightarrow \mathcal N(0, \tau_{k}^2)$.
+
+We have $h^{k + 1} = W f_k(h^k) - b_k \cdot f_{k - 1}(h^{k - 1})$. Let us define $\mathscr S_k \triangleq \sigma(\{h^1, h^2 \ldots h^k; h^0\})$ as the $\sigma$-field generated by all previous iterates of $h$, $b$, $m$, but notably does not include $W$.
 </details>
 
 <div class="callout proposition"><span class="label">Proposition: Prop Name</span><br/>

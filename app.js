@@ -27,10 +27,29 @@ async function loadAll(){
 
   if(window.MathJax?.typesetPromise){ await MathJax.typesetPromise([contentEl()]); }
 
+  removeEmptyPlaceholders();
   buildToc();
   autoNumberCallouts();
   addBookmarkButtons();
 }
+
+function removeEmptyPlaceholders() {
+  // Remove empty paragraph/div/mjx nodes (including inside callouts)
+  const nodes = document.querySelectorAll(
+    '#content p, #content div, #content .MathJax_Display, #content mjx-container, #content .MathJax, .callout p, .callout mjx-container, .callout .MathJax_Display'
+  );
+
+  nodes.forEach(el => {
+    const text = el.textContent?.trim() || '';
+    const hasVisibleChild = Array.from(el.children).some(c =>
+      c.tagName === 'IMG' || c.tagName === 'SVG' || c.querySelector('*') || c.textContent.trim() !== ''
+    );
+    if (!hasVisibleChild && text === '') {
+      el.remove();
+    }
+  });
+}
+
 
 function buildToc(){
   const secs = Array.from(document.querySelectorAll('.note-section > h1'));

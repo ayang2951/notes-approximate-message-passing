@@ -359,8 +359,3 @@ details.collapsible {
   margin-bottom: 1rem; /* increase value if you want more space */
 }
 
-/* Standardize spacing for display equations */
-.MathJax_Display {
-  margin-block-start: 1rem;  /* space above equation */
-  margin-block-end: 1rem;    /* space below equation */
-}
