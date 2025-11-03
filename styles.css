@@ -235,17 +235,25 @@ pre { padding:.8rem; overflow:auto; }
 .site-footer { max-width:var(--max-w); margin:0 auto; padding:1rem var(--side-pad); color:var(--ink-faint); font-size:.9rem; }
   
 .bookmark-btn {
-  visibility: hidden;
+  display: none; 
   cursor: pointer;
   font-size: .95rem;
   color: var(--ink-faint);
   background: none;
   border: none;
   padding: 0;
-  display: inline;
   margin-left: .45rem;
   vertical-align: middle;
 }
+
+/* still show it on hover */
+.bookmarkable:hover .bookmark-btn,
+.callout .label:hover .bookmark-btn,
+h2:hover > .bookmark-btn,
+h3:hover > .bookmark-btn {
+  display: inline;
+}
+
 
 .bookmarkable:hover .bookmark-btn,
 .callout .label:hover .bookmark-btn,
