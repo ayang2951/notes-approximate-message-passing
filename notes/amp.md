@@ -148,7 +148,7 @@ where
 $$\tilde \tau_2^2 \overset{(1)}= \lim_{n\rightarrow\infty} \frac{1}{n} \Vert m^1 \Vert_2^2 \overset{(2)}= \lim_{n \rightarrow\infty} \Vert f_1(h^1) \Vert_{n, 2} \overset{(3)}= \mathbb E[(f_1(Z_1))^2] \overset{(4)}= \tau_2^2,$$
 where, as before, $Z_1 \sim \mathcal N(0, \tau_1^2)$.
 
-Walking through the equalities, we have that $(1)/(2)$ follow from the same argument as was used in the first iteration, the proof of $(3)$ requires many, many technical steps and can be ignored for now (note that we <i>cannot</i> simply apply our typical LLN argument), and $(4)$ is from our definition of $\tau_k^2$ in the state evolution recursion&mdash;how we defined $\tau_2^2$.
+Walking through the equalities, we have that $(1)/(2)$ follow from the same argument as was used in the first iteration, the proof of $(3)$ requires many, many technical steps and can be ignored for now (note that LLN doesn't neatly apply), and $(4)$ is from our definition of $\tau_k^2$ in the state evolution recursion&mdash;how we defined $\tau_2^2$.
 
 At a high-level, the role of the Onsager correction term $b_1 \cdot m^0$ is the "cancel out" the dependence exactly in the limit. It ensures that at, for example, the second time step, $h^2$ asymptotically has the same distribution as $\tilde W m^1$.
 
