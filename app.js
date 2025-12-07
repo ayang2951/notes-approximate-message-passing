@@ -4,7 +4,8 @@ marked.setOptions({ gfm:true, mangle:false, headerIds:false });
 
 const ORDERED_NOTES = [
   { file: "highdstats.md", title: "Introduction to High-D Stats" },
-  { file: "amp.md", title: "AMP Algorithms" }
+  { file: "amp.md", title: "AMP Algorithms" },
+  { file: "papers.md", title: "Paper Reading" }
 ];
 
 function $id(id){ return document.getElementById(id); }

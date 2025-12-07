@@ -94,38 +94,40 @@ It is important to note that the asymptotics we will analyze will be for <i>each
 
 We have a symmetric random matrix $W$.
 
-Let $\\{f\_k\\}\_{k = 0}^\infty$ be a sequence of Lipschitz functions that take vector input and act componentwise. Let $m^{-1}(n) \triangleq 0$, and let $h^0$ be an initializer. For each $k \in \mathbb N$, define
-$$m^k = f\_k(h^k), \qquad b\_k = \frac{1}{n} \sum_{i = 1}^n f\_k^{'}(h\_i^k), \qquad h^{k + 1} = Wm^k - b_k m^{k - 1}.$$
+Let $\\{f\_k\\}\_{k = 0}^\infty$ be a sequence of Lipschitz functions that take vector input and act componentwise. Let $m^{(-1)}(n) \triangleq 0$, and let $h^{(0)}$ be an initializer. For each $k \in \mathbb N$, define
+$$m^k = f\_k(h^{(k)}), \qquad b\_k = \frac{1}{n} \sum_{i = 1}^n f\_k^{'}(h\_i^k), \qquad h^{(k + 1)} = Wm^k - b_k m^{(k - 1)}.$$
 As stated above, we are interested in the convergence of each of these iterates as $n \rightarrow \infty$. We will now state the key result, informally, of this convergence.
 
 
 <div class="callout theorem"><span class="label">Theorem: State Evolution of AMP Iterates (INFORMAL)</span><br/>
 <hr style="height:0.01px; visibility:hidden;" />
-Let $W$ be a GOE matrix, and let $h^0$ be an initializer independent of $W$. Let $m^{-1}(n) \triangleq 0$ and $\tau_1^2 \triangleq \lim_{n \rightarrow \infty} \frac{1}{n} \Vert f_0(h^0) \Vert_2^2$, which we assume to be finite.
+Let $W$ be a GOE matrix, and let $h^{(0)}$ be an initializer independent of $W$. Let $m^{(-1)}(n) \triangleq 0$ and $\tau_1^2 \triangleq \lim_{n \rightarrow \infty} \frac{1}{n} \Vert f_0(h^{(0)}) \Vert_2^2$, which we assume to be finite.
 
 Then for each $k \in \mathbb N$, for the AMP iterates defined by
-$$m^k = f\_k(h^k), \qquad b\_k = \frac{1}{n} \sum_{i = 1}^n f\_k^{'}(h\_i^k), \qquad h^{k + 1} = Wm^k - b_k m^{k - 1},$$
-the empirical distribution of $h^k$ (we shall denote this $\hat P_{h^k}$) converges to $\mathcal N(0, \tau_k^2)$ in Wasserstein distance (this will be stated more precisely in the formal theorem statement), where the variance is defined by the recursion
+$$m^{(k)} = f\_k(h^{(k)}), \qquad b\_k = \frac{1}{n} \sum_{i = 1}^n f\_k^{'}(h\_i^{(k)}), \qquad h^{(k + 1)} = Wm^{(k)} - b_k m^{(k - 1)},$$
+the empirical distribution of $h^{(k)}$ (we shall denote this $\hat P_{h^{(k)}}$) converges to $\mathcal N(0, \tau_k^2)$ in Wasserstein distance (this will be stated more precisely in the formal theorem statement), where the variance is defined by the recursion
 $$\tau_{k + 1}^2 = \mathbb E[(f_k(Z_k)^2)],$$
 where $Z_k \sim \mathbb N(0, \tau_k^2)$. This recursion for the variance terms is called the <em><i>state evolution</em></i>.
 </div>
 
+What this gives us is the Gaussianity of the iterates at each step $k$ with the variance specified by the state evolution. We now give a heuristic proof of the informal theory.
+
 <details class="collapsible">
   <summary>Heuristic Proof of Theorem 2.1.</summary>
   <div class="collapsible__content">
-We start with the first iterate: show $\hat P_{h^1} \rightarrow \mathcal N(0, \tau_1^2)$ where we have by definition that 
-$$h^1 = Wf_0(h^0) \quad \text{and} \quad \tau_1^2 \triangleq \lim_{n \rightarrow \infty} \frac{1}{n} \Vert f_0(h^0) \Vert_2^2 < \infty.$$
+We start with the first iterate: show $\hat P_{h^{(1)}} \rightarrow \mathcal N(0, \tau_1^2)$ where we have by definition that 
+$$h^{(1)} = Wf_0(h^{(0)}) \quad \text{and} \quad \tau_1^2 \triangleq \lim_{n \rightarrow \infty} \frac{1}{n} \Vert f_0(h^{(0)}) \Vert_2^2 < \infty.$$
 
-Conditioned on $h^0$, because $h^0 \perp W$, we have that (abusing notation for distribution)
-$$W f_0(h^0) \bigg\lvert_{h^0} \overset{d}= \mathcal N \left(0, \ \frac{1}{n}\sum_{i = 1}^n f_0(h^0_i) \mathbb I_n + \frac{1}{n} f_0(h_0) f_0(h_0)^\top\right) \qquad \text{ for each } n \in \mathbb N.$$
+Conditioned on $h^{(0)}$, because $h^{(0)} \perp W$, we have that (abusing notation for distribution)
+$$W f_0(h^0) \bigg\lvert_{h^{(0)}} \overset{d}= \mathcal N \left(0, \ \frac{1}{n}\sum_{i = 1}^n f_0(h^{(0)}_i) \mathbb I_n + \frac{1}{n} f_0(h_0) f_0(h_0)^\top\right) \qquad \text{ for each } n \in \mathbb N.$$
 We can first prove this above result on the finite-sample distribution.
 <details class="collapsible">
 <summary>Computing the Finite-Sample Distribution.</summary>
 <div class="collapsible__content">
 Recall that for $W \sim \text{GOE}(n)$, $W \overset{d}= G + G^\top$ where $G_{ij} \overset{iid}\sim \mathcal N(0, \frac{1}{2n})$. Hence, we have that
-$$W f_0(h^0) \bigg\lvert_{h^0} \overset{d}= (G+G^\top)f_0(h^0)\bigg\lvert_{h^0} = [G f_0(h^0) + G^\top f_0(h^0)] \bigg\lvert_{h^0}.$$
+$$W f_0(h^{(0)}) \bigg\lvert_{h^{(0)}} \overset{d}= (G+G^\top)f_0(h^{(0)})\bigg\lvert_{h^{(0)}} = [G f_0(h^{(0)}) + G^\top f_0(h^{(0)})] \bigg\lvert_{h^{(0)}}.$$
 We now simply compute the mean and covariance matrix of the components of the resultant vector. 
-$$\mathbb E_{W | h^0}[(W f_0(h^0))_i] = \mathbb E_{W|h^0}[(f_0(h^0)^\top G_{i, \boldsymbol{\cdot}}) + (f_0(h^0)^\top G_{\boldsymbol{\cdot}, i})] = 0,$$
+$$\mathbb E_{W | h^{(0)}}[(W f_0(h^{(0)}))_i] = \mathbb E_{W|h^{(0)}}[(f_0(h^{(0)})^\top G_{i, \boldsymbol{\cdot}}) + (f_0(h^{(0)})^\top G_{\boldsymbol{\cdot}, i})] = 0,$$
 since this is the sum of $2n - 1$ independent Gaussians with mean 0, variance $\frac{1}{2n}$ and 1 Gaussian with mean 0, variance $\frac{2}{n}$ because element $G_{ii}$ was repeated.
 
 Next, we compute the variance. Let $0\leq i, j \leq n$, and we compute $\text{Cov}((W f_0(h^0))_i, (W f_0(h^0))_j)$.
@@ -134,14 +136,18 @@ Hence, we obtain the form above for $n$ finite.
 </div>
 </details>
 We now take $n \rightarrow \infty$ to see the asymptotic result. We have that 
-$$\frac{1}{n} \Vert f_0(h^0) \Vert_2^2 \rightarrow \tau_1^2$$
-by assumption, and for "reasonable" $f_0(h^0)$, we have that the element
-$$(\frac{1}{n} f_0(h^0) f_0(h^0)^\top)_{ij} = \frac{1}{n} f_0(h^0)_i \cdot f_0(h^0)_j \rightarrow 0 \quad \text{as } n \rightarrow \infty.$$
-Hence, we have that for the first iterate,
-$$\hat P_{h^1} = \hat P_{W h^0} \rightarrow \mathcal N(0, \tau^2_1).$$
+$$\frac{1}{n} \Vert f_0(h^{(0)}) \Vert_2^2 \rightarrow \tau_1^2$$
+by assumption, and for "reasonable" $f_0(h^{(0)})$, we have that the element
+$$(\frac{1}{n} f_0(h^{(0)}) f_0(h^{(0)})^\top)_{ij} = \frac{1}{n} f_0(h^{(0)})_i \cdot f_0(h^{(0)})_j \rightarrow 0 \quad \text{as } n \rightarrow \infty.$$
+Hence we have 
+$$\hat P_{h^{(1)}} = \hat P_{W h^{(0)}} \rightarrow \mathcal N(0, \tau^2_1),$$
+so the result is proved for the first iterate. 
 
-The next step is to prove the same for $h^2$, but the challenge now is that $W$ is not independent of $h^1$:
-$$h^2 = W m^1 - b_1 m^0 \qquad \text{where } m^1 = f_1(h^1).$$
+<p style="text-align: center;"><small><br>♦ ♢ ♦<br><br></small></p>
+
+
+The next step is to prove the same for the second iterate $h^{(2)}$, but the challenge now is that $W$ is not independent of $h^1$:
+$$h^2 = W m^1 - b_1 m^0 \qquad \text{where } m^1 = f_1(h^{(1)}).$$
 However, consider a new matrix $\tilde W \sim \text{GOE}(n) \perp m^1$. Then we have that $\tilde Wm^1$ is Gaussian, and that, for $\hat P_n$ denoting the empirical distribution, 
 $$\hat P_n(\tilde W m^1) \bigg \lvert_{m^1} \rightarrow \mathcal N(0, \tilde \tau_2^2),$$
 where 
@@ -150,14 +156,64 @@ where, as before, $Z_1 \sim \mathcal N(0, \tau_1^2)$.
 
 Walking through the equalities, we have that $(1)/(2)$ follow from the same argument as was used in the first iteration, the proof of $(3)$ requires many, many technical steps and can be ignored for now (note that LLN doesn't neatly apply), and $(4)$ is from our definition of $\tau_k^2$ in the state evolution recursion&mdash;how we defined $\tau_2^2$.
 
-At a high-level, the role of the Onsager correction term $b_1 \cdot m^0$ is the "cancel out" the dependence exactly in the limit. It ensures that at, for example, the second time step, $h^2$ asymptotically has the same distribution as $\tilde W m^1$.
+At a high-level, the role of the Onsager correction term $b_1 \cdot m^0$ is the "cancel out" the dependence exactly in the limit. It ensures that at, for example, the second time step, $h^{(2)}$ asymptotically has the same distribution as $\tilde W m^1$.
 
-Having proved the first two time steps (one with the dependence that needed correction), we proceed to the inductive step: showing that $\hat P_n(h^{k + 1}) \rightarrow \mathcal N(0, \tau_{k}^2)$.
+<p style="text-align: center;"><small><br>♦ ♢ ♦<br><br></small></p>
 
-We have $h^{k + 1} = W f_k(h^k) - b_k \cdot f_{k - 1}(h^{k - 1})$. Let us define $\mathscr S_k \triangleq \sigma(\{h^1, h^2 \ldots h^k; h^0\})$ as the $\sigma$-field generated by all previous iterates of $h$, $b$, $m$, but notably does not include $W$.
+Having proved the first two time steps (one with the dependence that needed correction), we proceed to the inductive step: showing that $\hat P_n(h^{(k + 1)}) \rightarrow \mathcal N(0, \tau_{k}^2)$.
+
+We have $h^{(k + 1)} = W f_k(h^{(k)}) - b_k \cdot f_{k - 1}(h^{(k - 1)})$. Let us define $\mathscr S_k \triangleq \sigma(\{h^{(1)}, h^{(2)} \ldots h^{(k)}; h^{(0)}\})$ as the $\sigma$-field generated by all previous iterates of $h$, $b$, $m$, but notably does not include $W$.
+
+Let us define $P_k$ as the orthogonal projection onto $\mathscr S_k$ and $P_k^{\perp} \triangleq \mathbb I_{n} - P_k$. We decompose $W$ conditioned on $\mathscr S_k$ as
+$$W | \mathscr S_k \overset{d}= \mathbb E[W | \mathscr S_k] + P_k^{\perp} W P_k^{\perp} \overset{d}= \mathbb E[W | \mathscr S_k] + P_k^\perp \tilde W P_k^\perp.$$
+The important thing to note here is that $\tilde W \overset{d}= W$, but $\tilde W \perp \mathscr S_k$. 
+
+We therefore have, for the $k + 1$th iterate, 
+$$h^{(k + 1)} | \mathscr S_k \overset{d}= \mathbb E[W | \mathscr S_k] f_k (h^{(k)}) - b_k \cdot f_{k - 1}(h^{(k - 1)}) + P_k^\perp \tilde W P_k^\perp f_k(h^{(k)}) \overset{d}= \sum_{\ell = 0}^k \alpha_\ell h^{(\ell)} + \tau_{k} Z_k + \Delta_n.$$
+where, in the second expression, the first term in the sum is deterministic conditioned on $\mathscr S_k$ and the right side is random but independent of $\mathscr S_k$. In the last expression, the first term is deterministic, the second is random but independent, and the error term disppears in the limit.
+
+This concludes the heuristic proof of the informal theorem statement. We will make this more rigorous, precise, and concrete in the formal theorem statement.
 </details>
+
+Understanding the typical theorem statements given in AMP literature necessitates another definition, of <i>pseudo-Lipschitz</i> functions.
+
+<div class="callout definition"><span class="label">Definition: Pseudo-Lipschitz Functions</span><br/>
+<hr style="height:0.01px; visibility:hidden;" />
+A function $\psi : \mathbb R^{m} \rightarrow \mathbb R$ is in the class of $(k, c)$-pseudo-Lipschitz functions $\text{PL}(k, c)$ if
+$$|\psi(x) - \psi(y)| \leq c \left(1 + \Vert x \Vert ^{k - 1} + \Vert y \Vert^{k - 1}\right) \Vert x - y \Vert.$$
+</div>
+
+Conclusions in the AMP literature are often stated in terms of a result holding uniformly over a class of $(k, c)$-pseudo-Lipschitz functions. With this definition, we may formally state the AMP symmetric-case master theorem.
+
+<div class="callout theorem"><span class="label">Theorem: Symmetric AMP Master Theorem</span><br/>
+<hr style="height:0.01px; visibility:hidden;" />
+We begin with the theorem assumptions.
+
+<ol type="1">
+  <li>Let $W \sim \text{GOE}(n)$.</li>
+  <li>Let $\{f_k\}_{k = 0}$ be a sequence of Lipschitz functions and let $h^{(0)}$ be an initializer. Assume that the empirical distribution of $f_0(h^{(0)})$ converges to a distribution with a finite $k$th moment.</li>
+  <li>Regularity conditions on the functions $\{f_k\}$ are required.</li>
+</ol>
+
+Then, for any pseudo-Lipschitz function $\psi \in \text{PL}(k, c)$, for all $k \geq 1$, for $Z_k \sim \mathcal N(0, 1)$
+$$\lim_{n \rightarrow \infty} \frac{1}{n} \sum_{i = 1}^n \psi(h_i^{(k)}) \overset{a.s.}\rightarrow \mathbb E[\psi(\tau_k \cdot Z_k)].$$
+</div>
+
+<div class="callout example"><span class="label">Example: Quadratic Growth Function</span><br/>
+<hr style="height:0.01px; visibility:hidden;" />
+For $k = 2$, $(2, c)$-PL gives functions with at most quadratic growth. So, for example, with $\psi(x) = x^2$, 
+$$\lim_{n \rightarrow \infty} \frac{1}{n} \Vert h^{(k)} \Vert^2 = \tau_k^2.$$
+</div>
+
+If this convergence is strengthened to be uniform over the entire class of pseudo-Lipschitz function 
+
 
 <div class="callout proposition"><span class="label">Proposition: Prop Name</span><br/>
 <hr style="height:0.01px; visibility:hidden;" />
 
 </div>
+
+<ol type="i">
+  <li>.</li>
+  <li>.</li>
+</ol>
