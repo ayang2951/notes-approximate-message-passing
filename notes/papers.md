@@ -136,13 +136,13 @@ In essence, we may use low-degree polynomial functions to approximate the Bayes 
 
 The lower bound is more technically challenging (requiring some graph theory) and, perhaps, innovative. It relies on representing low-degree polynomials as functions on graphs, then claiming that the asymptotically-best estimators are only trees. AMP is then reduced to message passing/belief propogation, which is represented via trees. Through trees, then, we can characterize the optimal performance amongst low-degree polynomials and AMP algorithms.
 
-Let $\mathcal T_{\leq D}$ be the equivalence class of rooted trees up to root-preserving isomorphism$ with at most $D$ edges, i.e. elements in $\mathcal T_{\leq D}$ are distinct tree-shapes with the same root.
+Let $\mathcal T_{\leq D}$ be the equivalence class of rooted trees up to root-preserving isomorphism with at most $D$ edges, i.e. elements in $\mathcal T_{\leq D}$ are distinct tree-shapes with the same root.
 
 At a high-level, for any tree $T \in \mathcal T_{\leq D}$, we may define one associated polynomial $\mathscr F_T(Y)$, and we will consider <i>non-reversing labelings</i> over this tree.
 
 <div class="callout definition"><span class="label">Definition: Non-Reversing Labels</span><br/>
 <hr style="height:0.01px; visibility:hidden;" />
-A labeling $\phi$ of a tree $T = (V, E) \in \mathcal T\_{\leq D}$ is called <em><i>non-reversing</em></i> if, for all distinct pairs of vertices $u, v \in V$ where $\phi(u) = \phi(v)$, either $\text{d}_T(u, v) > 2$ or $u$ and $v$ are children of some common vertex.
+A labeling $\phi$ of a tree $T = (V, E) \in \mathcal T_{\leq D}$ is called <em><i>non-reversing</em></i> if, for all distinct pairs of vertices $u, v \in V$ where $\phi(u) = \phi(v)$, either $\text{d}_T(u, v) > 2$ or $u$ and $v$ are children of some common vertex.
 
 Call $\text{nr}(T)$ the set of all non-reversing labelings of $T \in \mathcal T_{\leq D}$.
 </div>
@@ -165,7 +165,7 @@ Consider without loss of generality the estimation of the first coordinate of $\
 
 <div class="callout proposition"><span class="label">Proposition: Optimality of Tree-Structured Polynomials</span><br/>
 <hr style="height:0.01px; visibility:hidden;" />
-Let $\pi_{\Theta}$ as before have all-finite moments. Let $\Psi(\theta_1)$ to be a measurable function that also has all-finite moments. For any fixed $D$, there exists a fixed choice of coefficients $\{\hat p_T\}_{T \in \mathcal T_{\leq D}}$ (independent of $n$) such that, the associated polynomial $p_n \in \mathbb R[Y]^{\mathcal T}_{\leq D}$ defined, like above, as $p(Y) = \sum_{T \in \mathcal T_{\leq D}}\hat p_T \cdot \mathscr F_T(Y)\right$, satisfies
+Let $\pi_{\Theta}$ as before have all-finite moments. Let $\Psi(\theta_1)$ to be a measurable function that also has all-finite moments. For any fixed $D$, there exists a fixed choice of coefficients $\{\hat p_T\}_{T \in \mathcal T_{\leq D}}$ (independent of $n$) such that, the associated polynomial $p_n \in \mathbb R[Y]^{\mathcal T}_{\leq D}$ defined, like above, as $p(Y) = \sum_{T \in \mathcal T_{\leq D}}\hat p_T \cdot \mathscr F_T(Y)$, satisfies
 $$\lim_{n \rightarrow \infty} \mathbb E[(p(Y) - \psi(\theta_1))^2] = \lim_{n \rightarrow \infty}\inf_{\tilde p \in \mathbb R[Y]_{\leq D}} \mathbb E[(\tilde p(Y) - \psi(\theta_1))^2].$$
 
 Proof aside, it remains to connect these tree-based polynomials to AMP. This will be done by examing AMP through its origins of message passing on graphs.
